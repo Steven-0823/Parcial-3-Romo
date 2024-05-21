@@ -17,7 +17,7 @@ return new class extends Migration
             $table->unsignedBigInteger('habitacion_id');
             $table->date('fecha_entrada');
             $table->date('fecha_salida');
-            $table->enum('estado', ['activa', 'cancelada', 'finalizada']);
+            $table->string('estado', 20);
             $table->timestamps();
 
             $table->foreign('cliente_id')->references('id')->on('clientes');
