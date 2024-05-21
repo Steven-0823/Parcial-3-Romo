@@ -15,7 +15,7 @@ class ClienteController extends Controller
     public function index()
     {
         $clientes = Clientes::all();
-        return json_encode(['clientes' => $clientes]);
+        return response()->json(['clientes' => $clientes]);
     }
 
     /**
@@ -23,7 +23,7 @@ class ClienteController extends Controller
      */
     public function store(Request $request)
     {
-        $cliente = new Clientes();
+        $cliente = new Cliente();
         $cliente->nombre = $request->nombre;
         $cliente->apellido = $request->apellido;
         $cliente->email = $request->email;
@@ -31,7 +31,7 @@ class ClienteController extends Controller
 
         $cliente->save();
 
-        return response()->json(['cliente' => $cliente], 200);
+        return  json_encode(['cliente' => $cliente]);
     }
 
     /**
