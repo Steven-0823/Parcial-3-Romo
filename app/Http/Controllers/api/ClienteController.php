@@ -23,7 +23,7 @@ class ClienteController extends Controller
      */
     public function store(Request $request)
     {
-        $cliente = new Cliente();
+        $cliente = new Clientes();
         $cliente->nombre = $request->nombre;
         $cliente->apellido = $request->apellido;
         $cliente->email = $request->email;
@@ -31,7 +31,7 @@ class ClienteController extends Controller
 
         $cliente->save();
 
-        return  json_encode(['cliente' => $cliente]);
+        return json_encode(['cliente' => $cliente], 200);
     }
 
     /**
@@ -39,16 +39,16 @@ class ClienteController extends Controller
      */
     public function show($id)
     {
-        $cliente = Cliente::find($id);
+        $cliente = Clientes::find($id); // Cambiado a Clientes
         return json_encode(['cliente' => $cliente]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request,$id)
+    public function update(Request $request, $id)
     {
-        $cliente = Cliente::find($id);
+        $cliente = Clientes::find($id); // Cambiado a Clientes
         $cliente->nombre = $request->nombre;
         $cliente->apellido = $request->apellido;
         $cliente->email = $request->email;
@@ -63,12 +63,9 @@ class ClienteController extends Controller
      */
     public function destroy(string $id)
     {
-        $cliente = Cliente::find($id);
+        $cliente = Clientes::find($id); // Cambiado a Clientes
         $cliente->delete();
-        $clientes = DB::table('clientes')
-        ->orderBy('nombre')
-        ->get();
 
-        return json_encode(['cliente' => $cliente]);
+        return response()->json(['mensaje' => 'Cliente eliminado correctamente'], 200);
     }
 }
