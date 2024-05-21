@@ -4,8 +4,7 @@ namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use App\Models\Habitaciones;
+use App\Models\Habitaciones; // Asegúrate de importar el modelo correcto
 
 class HabitacionController extends Controller
 {
@@ -15,7 +14,7 @@ class HabitacionController extends Controller
     public function index()
     {
         $habitaciones = Habitaciones::all();
-        return response()->json(['habitaciones' => $habitaciones]);
+        return json_encode(['habitaciones' => $habitaciones]);
     }
 
     /**
@@ -23,7 +22,14 @@ class HabitacionController extends Controller
      */
     public function store(Request $request)
     {
-        $habitacion = new Habitacion();
+        $request->validate([
+            'numero' => 'required|string|max:255',
+            'tipo' => 'required|string|max:255',
+            'precio_noche' => 'required|numeric',
+            'estado' => 'required|string|max:20',
+        ]);
+
+        $habitacion = new Habitaciones();
         $habitacion->numero = $request->numero;
         $habitacion->tipo = $request->tipo;
         $habitacion->precio_noche = $request->precio_noche;
@@ -31,7 +37,7 @@ class HabitacionController extends Controller
 
         $habitacion->save();
 
-        return  json_encode(['habitacion' => $habitacion]);
+        return json_encode(['habitacion' => $habitacion], 200);
     }
 
     /**
@@ -39,16 +45,16 @@ class HabitacionController extends Controller
      */
     public function show($id)
     {
-        $habitacion = Habitacion::find($id);
-        return json_encode(['habitacion' => $habitacion]);
+        $habitacion = Habitaciones::find($id);
+        return json_encode(['habitacion' => $habitacion], 200);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
-        $habitacion = Habitacion::find($id);
+        $habitacion = Habitaciones::find($id);
         $habitacion->numero = $request->numero;
         $habitacion->tipo = $request->tipo;
         $habitacion->precio_noche = $request->precio_noche;
@@ -56,21 +62,17 @@ class HabitacionController extends Controller
 
         $habitacion->save();
 
-        return  json_encode(['cliente' => $cliente]);
+        return json_encode(['habitacion' => $habitacion], 200);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($id)
     {
-        $habitacion = Habitacion::find($id);
+        $habitacion = Habitaciones::find($id);
         $habitacion->delete();
 
-        $habitaciones = DB::table('habitaciones')
-        ->orderBy('numero')
-        ->get();
-
-        return json_encode(['habitacion' => $habitacion]);
+        return json_encode(['mensaje' => 'Habitación eliminada correctamente'], 200);
     }
 }

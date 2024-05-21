@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('numero', 50);
             $table->string('tipo', 100);
             $table->decimal('precio_noche', 10, 2);
-            $table->enum('estado', ['disponible', 'ocupada', 'mantenimiento']);
+            $table->string('estado', 20);
             $table->timestamps();
         });
     }
