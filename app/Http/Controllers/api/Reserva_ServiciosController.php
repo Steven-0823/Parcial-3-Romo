@@ -15,7 +15,7 @@ class Reserva_ServiciosController extends Controller
      */
     public function index()
     {
-        //
+        
     }
 
     /**

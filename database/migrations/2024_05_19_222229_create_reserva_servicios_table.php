@@ -12,6 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('reserva_servicios', function (Blueprint $table) {
+            $table->id();
             $table->unsignedBigInteger('reserva_id');
             $table->unsignedBigInteger('servicio_id');
             $table->date('fecha');
@@ -20,8 +21,6 @@ return new class extends Migration
 
             $table->foreign('reserva_id')->references('id')->on('reservas');
             $table->foreign('servicio_id')->references('id')->on('servicios');
-
-            $table->primary(['reserva_id', 'servicio_id', 'fecha']);
         });
     }
 
