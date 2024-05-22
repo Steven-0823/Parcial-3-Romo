@@ -23,8 +23,7 @@ class ServiciosController extends Controller
      */
     public function store(Request $request)
     {
-        $servicio = new Servicio();
-        $servicio->id = $request->id;
+        $servicio = new Servicios();
         $servicio->nombre = $request->nombre;
         $servicio->descripcion = $request->descripcion;
         $servicio->costo = $request->costo;
@@ -39,7 +38,7 @@ class ServiciosController extends Controller
      */
     public function show(string $id)
     {
-        $servicio = Servicio::find($id);
+        $servicio = Servicios::find($id);
         return  json_encode(['servicio' => $servicio]);
     }
 
@@ -48,8 +47,7 @@ class ServiciosController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $servicio = Servicio::find($id);
-        $servicio->id = $request->id;
+        $servicio = Servicios::find($id);
         $servicio->nombre = $request->nombre;
         $servicio->descripcion = $request->descripcion;
         $servicio->costo = $request->costo;
@@ -64,12 +62,9 @@ class ServiciosController extends Controller
      */
     public function destroy(string $id)
     {
-        $servicio = Servicio::find($id);
+        $servicio = Servicios::find($id);
         $servicio->delete();
-        $servicios = DB::table('servicios')
-        ->orderBy('nombre')
-        ->get();
-
+   
         return  json_encode(['servicio' => $servicio]);
     }
 }
